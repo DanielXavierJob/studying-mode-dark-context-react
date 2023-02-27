@@ -9,6 +9,8 @@ const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function MyApp() {
   const theme = useTheme();
+
+  //contexto necessário pra mudar a cor
   const colorMode = React.useContext(ColorModeContext);
   return (
     <Box
@@ -35,6 +37,8 @@ function MyApp() {
           <Brightness4Icon />
         )}
       </IconButton>
+
+      {/* Mostrando todos os backgrounds atuais */}
       {theme.palette.backgrounds.map((item, i) => {
         return (
           <p key={i}>
@@ -42,11 +46,18 @@ function MyApp() {
           </p>
         );
       })}
+
+
+      {/* Mostrando um background */}
+      Pegando o Navbar:
+      {theme.palette.backgrounds.find((background) => background.name == "navbar").background}
     </Box>
   );
 }
 
 export default function ToggleColorMode() {
+
+  // Aqui eu seto as variaveis com os modos
   const lightMode = {
     mode: "light",
     backgrounds: [
@@ -73,8 +84,12 @@ export default function ToggleColorMode() {
       },
     ],
   };
+
+  //crio um useState com o modo selecionado
   const [mode, setMode] = React.useState(lightMode);
 
+
+  //utilizo o useMemo para criar o contexto de mudar os modos
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -87,6 +102,7 @@ export default function ToggleColorMode() {
     []
   );
 
+  // crio o tema
   const theme = React.useMemo(
     () =>
       createTheme({
@@ -98,6 +114,7 @@ export default function ToggleColorMode() {
   );
 
   return (
+    // exporto o contexto do useState
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <MyApp />
