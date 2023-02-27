@@ -35,7 +35,7 @@ function MyApp() {
           <Brightness4Icon />
         )}
       </IconButton>
-      {theme.palettue.backgrounds.map((item, i) => {
+      {theme.palette.backgrounds.map((item, i) => {
         return (
           <p key={i}>
             {item.name} - {item.background}
